@@ -8,7 +8,8 @@
         Title="MainWindow" Height="450" Width="800">
     <Grid>
         <Canvas HorizontalAlignment="Left" Height="399" Margin="10,10,0,0" VerticalAlignment="Top" Width="772">
-            <ListBox x:Name="lbData" Height="75" Canvas.Left="520" Canvas.Top="10" Width="242"/>
+            <ListBox x:Name="lbData" Height="75" Canvas.Left="520" Canvas.Top="10" Width="242" SelectionChanged="lbData_SelectionChanged"/>
+            <DataGrid x:Name="dgvFigData" Height="269" Canvas.Left="520" Canvas.Top="85" Width="242"/>
         </Canvas>
 
     </Grid>

@@ -59,7 +59,7 @@ namespace Library_Core
 
             catalogObjectsData.Add(new CatalogObjectsData
             {
-                Name = "Line",
+                Name = "Puzzle",
                 Data = new Dictionary<string, string>
                 {
                     { "Name", "" },
@@ -70,7 +70,7 @@ namespace Library_Core
 
             catalogObjectsData.Add(new CatalogObjectsData
             {
-                Name = "Rectangle",
+                Name = "TableGame",
                 Data = new Dictionary<string, string>
                 {
                     { "Name", "" },
