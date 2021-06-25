@@ -24,7 +24,7 @@ namespace Library_directory
         public MainWindow()
         {
             InitializeComponent();
-            lbData.ItemsSource = Cata.InitFiguresData();
+            lbData.ItemsSource = CatalogObjectsFab.InitFiguresData();
         }
 
     }
