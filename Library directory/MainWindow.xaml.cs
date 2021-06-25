@@ -27,8 +27,9 @@ namespace Library_directory
 
         private void ClearDateTable()
         {
-            dt.Columns.Clear();
             dt.Rows.Clear();
+            dt.Columns.Clear();   //warning: All Columns delete
+            dt.Dispose();
         }
         private void lbData_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -41,7 +42,8 @@ namespace Library_directory
             foreach (var c in catalogObject.Data)
             {
                 dt.Columns.Add(c.Key);
-                dataRow[c.Key] = c.Value;
+                if(c.Key == "")
+                    dataRow[c.Key] = c.Value;
             }
             dgvFigData.ItemsSource = dt.DefaultView;
         }
