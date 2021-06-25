@@ -15,7 +15,6 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Data;
 using Library_Core;
-using Binding = System.Windows.Data.Binding;
 
 namespace Library_directory
 {
@@ -24,27 +23,67 @@ namespace Library_directory
     /// </summary>
     public partial class MainWindow : Window
     {
-
+        List<CatalogObject> catalogObjects = new List<CatalogObject>();
+        DataTable dt = new DataTable();
         public MainWindow()
         {
             InitializeComponent();
             lbData.ItemsSource = CatalogObjectsFab.InitFiguresData();
-           
         }
+
 
         private void lbData_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var Cat = lbData.SelectedItem as CatalogObjectsData;
+            DataRow dataRow = dt.NewRow();
+            dgvFigData.ItemsSource = null;
+            dt.Columns.Clear();
+            dt.Rows.Clear();
+            var catalogObject = lbData.SelectedItem as CatalogObjectsData;
 
-            DataTable dt = new DataTable();
-            foreach (var c in Cat.Data)
+            dt.Rows.Add(dataRow);
+            foreach (var c in catalogObject.Data)
             {
                 dt.Columns.Add(c.Key);
-                DataRow dr = dt.NewRow(); ;
-                dt.Rows.Add(dr);
-                dr[c.Key] = c.Value;
+                dataRow[c.Key] = c.Value;
             }
             dgvFigData.ItemsSource = dt.DefaultView;
+        }
+
+
+        private void saveDataBtn_Click(object sender, RoutedEventArgs e)
+        {
+            var fig = lbData.SelectedItem as CatalogObjectsData;
+            foreach (DataRow row in dt.Rows)
+            {
+                foreach (var c in fig.Data.ToArray())
+                {
+                    var key = c.Key;
+                    var val = row[c.Key].ToString();
+                    try
+                    {
+                        fig.Data[key] = val;
+                    }
+                    catch (Exception)
+                    {
+                        throw new ArgumentException("Неправильно введенные данные", key);
+                    }
+                }
+            }
+            CreateObject();
+        }
+
+        private void CreateObject()
+        {
+            var fig = CatalogObjectsFab.Make(lbData.SelectedItem as CatalogObjectsData);
+            if (fig != null)
+            {
+                catalogObjects.Add(fig);
+            }
+        }
+
+        private void btnSaveInJSON_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
