@@ -15,6 +15,9 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Data;
 using Library_Core;
+using Newtonsoft.Json;
+using System.IO;
+using System.Collections.ObjectModel;
 
 namespace Library_directory
 {
@@ -23,21 +26,27 @@ namespace Library_directory
     /// </summary>
     public partial class MainWindow : Window
     {
-        List<CatalogObject> catalogObjects = new List<CatalogObject>();
-        DataTable dt = new DataTable();
+        ObservableCollection<CatalogObject> catalogObjects = new ObservableCollection<CatalogObject>();
+        static DataTable dt = new DataTable();
+        DataRow dataRow = dt.NewRow();
         public MainWindow()
         {
             InitializeComponent();
             lbData.ItemsSource = CatalogObjectsFab.InitFiguresData();
+            lbDataList.ItemsSource = catalogObjects;
         }
 
 
-        private void lbData_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void ClearDateTable()
         {
-            DataRow dataRow = dt.NewRow();
-            dgvFigData.ItemsSource = null;
             dt.Columns.Clear();
             dt.Rows.Clear();
+        }
+        private void lbData_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ClearDateTable();
+            dgvFigData.ItemsSource = null;
+
             var catalogObject = lbData.SelectedItem as CatalogObjectsData;
 
             dt.Rows.Add(dataRow);
@@ -52,13 +61,20 @@ namespace Library_directory
 
         private void saveDataBtn_Click(object sender, RoutedEventArgs e)
         {
-            var fig = lbData.SelectedItem as CatalogObjectsData;
+            CatalogObjectsData fig = lbData.SelectedItem as CatalogObjectsData;
+
             foreach (DataRow row in dt.Rows)
             {
                 foreach (var c in fig.Data.ToArray())
                 {
                     var key = c.Key;
                     var val = row[c.Key].ToString();
+                    if (val == "")
+                    {
+                        System.Windows.MessageBox.Show("Неправильно введенные данные " + key);
+                        ClearDateTable();
+                        return;
+                    }
                     try
                     {
                         fig.Data[key] = val;
@@ -69,7 +85,9 @@ namespace Library_directory
                     }
                 }
             }
-            CreateObject();
+                CreateObject();
+                ClearDateTable();
+                System.Windows.MessageBox.Show("Вы успешно добавили " + fig.Name);
         }
 
         private void CreateObject()
@@ -81,9 +99,9 @@ namespace Library_directory
             }
         }
 
-        private void btnSaveInJSON_Click(object sender, RoutedEventArgs e)
+        private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            lbData_SelectionChanged(sender, e);
         }
     }
 }

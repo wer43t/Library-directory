@@ -10,8 +10,8 @@
         <Canvas HorizontalAlignment="Left" Height="399" Margin="10,10,0,0" VerticalAlignment="Top" Width="772">
             <ListBox x:Name="lbData" Height="75" Canvas.Left="520" Canvas.Top="10" Width="242" SelectionChanged="lbData_SelectionChanged"/>
             <DataGrid x:Name="dgvFigData" Height="269" Canvas.Left="520" Canvas.Top="85" Width="242"/>
-            <Button x:Name="saveDataBtn" Content="Button" Canvas.Left="675" Canvas.Top="369" Width="75" Click="saveDataBtn_Click"/>
-            <Button x:Name="btnSaveInJSON" Content="Выгрузить данные" Canvas.Left="549" Canvas.Top="369" Width="75" Click="btnSaveInJSON_Click"/>
+            <Button x:Name="saveDataBtn" Content="Button" Canvas.Left="604" Canvas.Top="369" Width="75" Click="saveDataBtn_Click"/>
+            <ListBox x:Name="lbDataList" Height="344" Canvas.Left="19" Canvas.Top="10" Width="473" SelectionChanged="ListBox_SelectionChanged"/>
         </Canvas>
 
     </Grid>
