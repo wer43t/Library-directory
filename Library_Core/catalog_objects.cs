@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 
 namespace Library_Core
 {
@@ -17,7 +13,6 @@ namespace Library_Core
             this.Creator = Creator;
         }
     }
-    [Serializable]
     public class Book : CatalogObject
     {
         string authors;
@@ -31,7 +26,6 @@ namespace Library_Core
             this.publishingYear = publishingYear;
         }
     }
-    [Serializable]
     public class Puzzle : CatalogObject
     {
         string amountElements;
@@ -41,7 +35,6 @@ namespace Library_Core
             this.amountElements = amountElements;
         }
     }
-    [Serializable]
     public class TableGame : CatalogObject
     {
         string description;
